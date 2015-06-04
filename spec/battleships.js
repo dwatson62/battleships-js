@@ -13,19 +13,24 @@ describe('Can create a board at start of the game', function () {
   })
 });
 
-describe('On player creation', function() {
-  it('can place 1 ship of size 1', function () {
+describe('Player can place', function() {
+  it('1 ship of size 1', function () {
     player.place('sub', 'A1');
     expect(player.ships.length).toEqual(1)
   });
-  it('can place 2 ships of size 1', function () {
+  it('2 ships of size 1', function () {
     player.place('sub', 'A1');
     player.place('sub', 'A2');
     expect(player.ships.length).toEqual(2)
   });
-  it('can place 1 ship of size 2 horizontally', function () {
+  it('1 ship of size 2 horizontally', function () {
     player.place('destroyer', 'B1');
     expect(player.ships.length).toEqual(2);
+  });
+  it('1 ship of size 2 vertically', function () {
+    player.place('destroyer', 'B1', 'V');
+    expect(player.ships.length).toEqual(2);
+    console.log(player.ships)
   });
 });
 
@@ -64,8 +69,6 @@ describe('Player can fire', function () {
   it('at B1 and B2 and sink the destroyer', function () {
     player.fire(board, 'B1');
     player.fire(board, 'B2');
-            console.log(player.ships)
-    console.log(board.grid)
     expect(board.grid[1][0]).toEqual('SUNK');
     expect(board.grid[1][1]).toEqual('SUNK');
   });

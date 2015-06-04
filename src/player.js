@@ -8,17 +8,22 @@ function Player() {
   this.ships = [];
 };
 
-Player.prototype.place = function(ship, square) {
+Player.prototype.place = function(ship, square, direction) {
   if (ship == 'sub') {
     sub = new Ship('sub', square);
     this.ships.push(sub);
   }
   else if (ship == 'destroyer') {
-    destroyer1 = new Ship('destroyer', square);
-    this.ships.push(destroyer1);
-    square = this.nextHorizontalSquare(square);
-    destroyer2 = new Ship('destroyer', square)
-    this.ships.push(destroyer2);
+    this.placeDestroyer(square, direction);
+};
+
+Player.prototype.placeDestroyer = function(square, direction) {
+  destroyer1 = new Ship('destroyer', square);
+  this.ships.push(destroyer1);
+  if (direction == 'V') { square = this.nextVerticalSquare(square) }
+  else { square = this.nextHorizontalSquare(square) }
+  destroyer2 = new Ship('destroyer', square);
+  this.ships.push(destroyer2);
   }
 };
 
@@ -82,5 +87,11 @@ Player.prototype.splitSquare = function(square) {
 Player.prototype.nextHorizontalSquare = function(square) {
   result = this.splitSquare(square);
   result[1] = String.fromCharCode(result[1].charCodeAt() + 1)
+  return result.join('');
+};
+
+Player.prototype.nextVerticalSquare = function(square) {
+  result = this.splitSquare(square);
+  result[0] = String.fromCharCode(result[0].charCodeAt() + 1)
   return result.join('');
 };
