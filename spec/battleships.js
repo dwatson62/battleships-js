@@ -17,7 +17,7 @@ describe('Can create a board at start of the game', function () {
 describe('On player creation', function() {
   it('has 1 available ship of size 1 to place', function () {
     player.place(ship, 'A1');
-    expect(player.ships).toEqual([ship, 'A1'])
+    expect(player.ships).toEqual([[ship, 'A1']])
   });
 });
 
@@ -40,5 +40,10 @@ describe('Player can fire', function () {
   it('at A10 square and miss', function () {
     player.fire(board, 'A10');
     expect(board.grid[0][9]).toEqual('MISS');
+  });
+
+  it('at A1 and hit', function () {
+    player.fire(board, 'A1');
+    expect(board.grid[0][0]).toEqual('HIT');
   });
 });

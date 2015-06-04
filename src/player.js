@@ -1,14 +1,22 @@
 function Player() {
-  this.ships = [];
+  this.ships = []
 };
 
 Player.prototype.place = function(ship, square) {
-  this.ships.push(ship, square);
+  this.ships.push([ship, square]);
 };
 
 Player.prototype.fire = function(board, square) {
   var coords = this.convert(square);
-  board.grid[coords[0]][coords[1]] = 'MISS';
+  for (i = 0; i < this.ships.length; i ++) {
+    if (this.ships[i][1] == square) {
+      board.grid[coords[0]][coords[1]] = 'HIT';
+      break
+    }
+    else {
+      board.grid[coords[0]][coords[1]] = 'MISS';
+    }
+  }
 };
 
 Player.prototype.convert = function(square) {
