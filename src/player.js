@@ -30,6 +30,7 @@ Player.prototype.fire = function(board, square) {
     }
   }
   this.isSunk(coords);
+  return this.gameOver();
 };
 
 Player.prototype.isSunk = function() {
@@ -50,6 +51,7 @@ Player.prototype.isSunk = function() {
       this.sinkIt('carrier');
     }
   }
+  return this.gameOver();
 };
 
 Player.prototype.sinkIt = function(ship) {
@@ -59,6 +61,15 @@ Player.prototype.sinkIt = function(ship) {
       coords = this.convert(this.ships[x].square)
       board.grid[coords[0]][coords[1]] = 'SUNK';
     }
+  }
+};
+
+Player.prototype.gameOver = function() {
+  for(x = 0; x < this.ships.length; x ++) {
+    if (this.ships[x].status != 'SUNK') {
+      break
+    }
+    return 'Game Over!';
   }
 };
 

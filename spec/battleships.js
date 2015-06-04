@@ -151,3 +151,18 @@ describe('Player can sink', function () {
   });
 
 });
+
+describe('Player can win the game', function () {
+
+  beforeEach(function() {
+    player.placeShip('sub', 'A1', 1);
+    player.placeShip('cruiser', 'C1', 3);
+  });
+
+  it('by sinking all ships', function () {
+    player.fire(board, 'A1');
+    player.fire(board, 'C1');
+    player.fire(board, 'C2');
+    expect(player.fire(board, 'C3')).toEqual('Game Over!');
+  });
+});
