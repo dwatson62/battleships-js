@@ -21,7 +21,6 @@ describe('Player can place', function() {
   it('1 ship of size 2 horizontally', function () {
     player.place('destroyer', 'B1');
     expect(player.ships.length).toEqual(2);
-    console.log(player.ships)
   });
   it('1 ship of size 2 vertically', function () {
     player.place('destroyer', 'B1', 'V');
@@ -80,15 +79,38 @@ describe('Player can fire', function () {
     expect(board.grid[1][0]).toEqual('HIT');
   });
 
-  it('at A1 and sink the sub', function () {
+});
+
+describe('Player can sink', function () {
+
+  beforeEach(function() {
+    player.place('sub', 'A1');
+    player.place('cruiser', 'C1');
+    player.place('destroyer', 'B1');
+    player.place('battleship', 'D1');
+    player.place('carrier', 'E1');
+  });
+
+  it('the sub', function () {
     player.fire(board, 'A1');
     expect(board.grid[0][0]).toEqual('SUNK');
   });
 
-  it('at B1 and B2 and sink the destroyer', function () {
+  it('the destroyer', function () {
     player.fire(board, 'B1');
     player.fire(board, 'B2');
     expect(board.grid[1][0]).toEqual('SUNK');
     expect(board.grid[1][1]).toEqual('SUNK');
   });
+
+  it('the cruiser', function () {
+    player.fire(board, 'C1');
+    player.fire(board, 'C2');
+    player.fire(board, 'C3');
+    console.log(player.ships)
+    expect(board.grid[2][0]).toEqual('SUNK');
+    expect(board.grid[2][1]).toEqual('SUNK');
+    expect(board.grid[2][2]).toEqual('SUNK');
+  });
+
 });

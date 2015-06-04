@@ -72,18 +72,26 @@ Player.prototype.fire = function(board, square) {
   this.isSunk(coords);
 };
 
-Player.prototype.isSunk = function(coords) {
+Player.prototype.isSunk = function() {
   for (i = 0; i < this.ships.length; i ++ ) {
     if (this.ships[i].name == 'sub' && this.ships[i].status == 'HIT') {
-      this.ships[i].status = 'SUNK';
-      board.grid[coords[0]][coords[1]] = 'SUNK';
+      this.sinkIt('sub');
     }
-    else if (this.ships[i].name == 'destroyer' && this.ships[i].status == 'HIT' && this.ships[i + 1].status == 'HIT') {
-      for (j = i; j < 3; j ++) {
-        this.ships[j].status = 'SUNK';
-        coords = this.convert(this.ships[j].square)
-        board.grid[coords[0]][coords[1]] = 'SUNK';
-      }
+    else if (this.ships[i].name == 'destroyer' &&  this.ships[i].status == 'HIT' && this.ships[i + 1].status == 'HIT') {
+      this.sinkIt('destroyer');
+    }
+    else if (this.ships[i].name == 'cruiser' &&  this.ships[i].status == 'HIT' && this.ships[i + 1].status == 'HIT' && this.ships[i + 2].status == 'HIT') {
+      this.sinkIt('cruiser');
+    }
+  }
+};
+
+Player.prototype.sinkIt = function(ship) {
+  for (x = 0; x < this.ships.length; x ++ ) {
+    if (this.ships[x].name == ship) {
+      this.ships[x].status = 'SUNK'
+      coords = this.convert(this.ships[x].square)
+      board.grid[coords[0]][coords[1]] = 'SUNK';
     }
   }
 };
@@ -110,7 +118,7 @@ Player.prototype.splitSquare = function(square) {
     result[1] = '10';
   }
   else { result = square.split('',2) }
-    return result;
+  return result;
 };
 
 Player.prototype.nextHorizontalSquare = function(square) {
