@@ -1,0 +1,159 @@
+<html>
+  <head>
+    <title>Battleships Javascript</title>
+    <!-- <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"> -->
+    <script src='./lib/jquery-2.1.4.min.js'></script>
+    <script src='./src/player.js'></script>
+    <script src='./src/application.js'></script>
+  </head>
+  <header>
+    <center><h1>Battleships Javascript</h1></center>
+  </header>
+  <center><body bgcolor='Red'>
+    <h3>Place your ships player 1</h3>
+    <br>
+    <form class='form-inline' id='numbers'>
+      <input type='text' size='4'>----
+      <input type='text' id='1' size='4' value='1'>
+      <input type='text' id='1' size='4' value='2'>
+      <input type='text' id='1' size='4' value='3'>
+      <input type='text' id='1' size='4' value='4'>
+      <input type='text' id='1' size='4' value='5'>
+      <input type='text' id='1' size='4' value='6'>
+      <input type='text' id='1' size='4' value='7'>
+      <input type='text' id='1' size='4' value='8'>
+      <input type='text' id='1' size='4' value='9'>
+      <input type='text' id='1' size='4' value='10'>
+    </form>
+    <form class='form-inline'>
+      <input type='text' id='A' size='4' value='A'>----
+      <input type='text' id='A1' size='4'>
+      <input type='text' id='A2' size='4'>
+      <input type='text' id='A3' size='4'>
+      <input type='text' id='A4' size='4'>
+      <input type='text' id='A5' size='4'>
+      <input type='text' id='A6' size='4'>
+      <input type='text' id='A7' size='4'>
+      <input type='text' id='A8' size='4'>
+      <input type='text' id='A9' size='4'>
+      <input type='text' id='A10' size='4'>
+    </form>
+    <form class='form-inline'>
+      <input type='text' id='B' size='4' value='B'>----
+      <input type='text' id='B1' size='4'>
+      <input type='text' id='B2' size='4'>
+      <input type='text' id='B3' size='4'>
+      <input type='text' id='B4' size='4'>
+      <input type='text' id='B5' size='4'>
+      <input type='text' id='B6' size='4'>
+      <input type='text' id='B7' size='4'>
+      <input type='text' id='B8' size='4'>
+      <input type='text' id='B9' size='4'>
+      <input type='text' id='B10' size='4'>
+    </form>
+    <form class='form-inline'>
+      <input type='text' id='C' size='4' value='C'>----
+      <input type='text' id='C1' size='4'>
+      <input type='text' id='C2' size='4'>
+      <input type='text' id='C3' size='4'>
+      <input type='text' id='C4' size='4'>
+      <input type='text' id='C5' size='4'>
+      <input type='text' id='C6' size='4'>
+      <input type='text' id='C7' size='4'>
+      <input type='text' id='C8' size='4'>
+      <input type='text' id='C9' size='4'>
+      <input type='text' id='C10' size='4'>
+    </form>
+    <form class='form-inline'>
+      <input type='text' id='D' size='4' value='D'>----
+      <input type='text' id='D1' size='4'>
+      <input type='text' id='D2' size='4'>
+      <input type='text' id='D3' size='4'>
+      <input type='text' id='D4' size='4'>
+      <input type='text' id='D5' size='4'>
+      <input type='text' id='D6' size='4'>
+      <input type='text' id='D7' size='4'>
+      <input type='text' id='D8' size='4'>
+      <input type='text' id='D9' size='4'>
+      <input type='text' id='D10' size='4'>
+    </form>
+    <form class='form-inline'>
+      <input type='text' id='E' size='4' value='E'>----
+      <input type='text' id='E1' size='4'>
+      <input type='text' id='E2' size='4'>
+      <input type='text' id='E3' size='4'>
+      <input type='text' id='E4' size='4'>
+      <input type='text' id='E5' size='4'>
+      <input type='text' id='E6' size='4'>
+      <input type='text' id='E7' size='4'>
+      <input type='text' id='E8' size='4'>
+      <input type='text' id='E9' size='4'>
+      <input type='text' id='E10' size='4'>
+    </form>
+    <form class='form-inline'>
+      <input type='text' id='F' size='4' value='F'>----
+      <input type='text' id='F1' size='4'>
+      <input type='text' id='F2' size='4'>
+      <input type='text' id='F3' size='4'>
+      <input type='text' id='F4' size='4'>
+      <input type='text' id='F5' size='4'>
+      <input type='text' id='F6' size='4'>
+      <input type='text' id='F7' size='4'>
+      <input type='text' id='F8' size='4'>
+      <input type='text' id='F9' size='4'>
+      <input type='text' id='F10' size='4'>
+    </form>
+    <form class='form-inline'>
+      <input type='text' id='G' size='4' value='G'>----
+      <input type='text' id='G1' size='4'>
+      <input type='text' id='G2' size='4'>
+      <input type='text' id='G3' size='4'>
+      <input type='text' id='G4' size='4'>
+      <input type='text' id='G5' size='4'>
+      <input type='text' id='G6' size='4'>
+      <input type='text' id='G7' size='4'>
+      <input type='text' id='G8' size='4'>
+      <input type='text' id='G9' size='4'>
+      <input type='text' id='G10' size='4'>
+    </form>
+    <form class='form-inline'>
+      <input type='text' id='H' size='4' value='H'>----
+      <input type='text' id='H1' size='4'>
+      <input type='text' id='H2' size='4'>
+      <input type='text' id='H3' size='4'>
+      <input type='text' id='H4' size='4'>
+      <input type='text' id='H5' size='4'>
+      <input type='text' id='H6' size='4'>
+      <input type='text' id='H7' size='4'>
+      <input type='text' id='H8' size='4'>
+      <input type='text' id='H9' size='4'>
+      <input type='text' id='H10' size='4'>
+    </form>
+    <form class='form-inline'>
+      <input type='text' id='I' size='4' value='I'>----
+      <input type='text' id='I1' size='4'>
+      <input type='text' id='I2' size='4'>
+      <input type='text' id='I3' size='4'>
+      <input type='text' id='I4' size='4'>
+      <input type='text' id='I5' size='4'>
+      <input type='text' id='I6' size='4'>
+      <input type='text' id='I7' size='4'>
+      <input type='text' id='I8' size='4'>
+      <input type='text' id='I9' size='4'>
+      <input type='text' id='I10' size='4'>
+    </form>
+    <form class='form-inline'>
+      <input type='text' id='J' size='4' value='J'>----
+      <input type='text' id='J1' size='4'>
+      <input type='text' id='J2' size='4'>
+      <input type='text' id='J3' size='4'>
+      <input type='text' id='J4' size='4'>
+      <input type='text' id='J5' size='4'>
+      <input type='text' id='J6' size='4'>
+      <input type='text' id='J7' size='4'>
+      <input type='text' id='J8' size='4'>
+      <input type='text' id='J9' size='4'>
+      <input type='text' id='J10' size='4'>
+    </form>
+  </body></center>
+  </html>
