@@ -30,6 +30,14 @@ Player.prototype.placeShip = function(name, square, size, direction) {
     if (direction == 'V') { square = this.nextVerticalSquare(square); }
     else { square = this.nextHorizontalSquare(square); }
   }
+  this.updateBoard();
+};
+
+Player.prototype.updateBoard = function() {
+  for (x = 0; x < this.ships.length; x ++ ) {
+    coords = this.convert(this.ships[x].square);
+    this.ownBoard[coords[0]][coords[1]] = 'SHIP';
+  };
 };
 
 Player.prototype.fire = function(player, square) {
