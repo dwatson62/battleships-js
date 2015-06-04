@@ -107,10 +107,47 @@ describe('Player can sink', function () {
     player.fire(board, 'C1');
     player.fire(board, 'C2');
     player.fire(board, 'C3');
-    console.log(player.ships)
     expect(board.grid[2][0]).toEqual('SUNK');
     expect(board.grid[2][1]).toEqual('SUNK');
     expect(board.grid[2][2]).toEqual('SUNK');
+  });
+
+  it('the battleship', function () {
+    player.fire(board, 'D1');
+    player.fire(board, 'D2');
+    player.fire(board, 'D3');
+    player.fire(board, 'D4');
+    expect(board.grid[3][0]).toEqual('SUNK');
+    expect(board.grid[3][1]).toEqual('SUNK');
+    expect(board.grid[3][2]).toEqual('SUNK');
+    expect(board.grid[3][3]).toEqual('SUNK');
+  });
+
+  it('the carrier', function () {
+    player.fire(board, 'E1');
+    player.fire(board, 'E2');
+    player.fire(board, 'E3');
+    player.fire(board, 'E4');
+    player.fire(board, 'E5');
+    expect(board.grid[4][0]).toEqual('SUNK');
+    expect(board.grid[4][1]).toEqual('SUNK');
+    expect(board.grid[4][2]).toEqual('SUNK');
+    expect(board.grid[4][3]).toEqual('SUNK');
+    expect(board.grid[4][4]).toEqual('SUNK');
+  });
+
+  it('the carrier when vertical too', function () {
+    player.place('carrier', 'A10', 'V')
+    player.fire(board, 'A10');
+    player.fire(board, 'B10');
+    player.fire(board, 'C10');
+    player.fire(board, 'D10');
+    player.fire(board, 'E10');
+    expect(board.grid[0][9]).toEqual('SUNK');
+    expect(board.grid[1][9]).toEqual('SUNK');
+    expect(board.grid[2][9]).toEqual('SUNK');
+    expect(board.grid[3][9]).toEqual('SUNK');
+    expect(board.grid[4][9]).toEqual('SUNK');
   });
 
 });

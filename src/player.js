@@ -83,6 +83,12 @@ Player.prototype.isSunk = function() {
     else if (this.ships[i].name == 'cruiser' &&  this.ships[i].status == 'HIT' && this.ships[i + 1].status == 'HIT' && this.ships[i + 2].status == 'HIT') {
       this.sinkIt('cruiser');
     }
+    else if (this.ships[i].name == 'battleship' &&  this.ships[i].status == 'HIT' && this.ships[i + 1].status == 'HIT' && this.ships[i + 2].status == 'HIT' && this.ships[i + 3].status == 'HIT') {
+      this.sinkIt('battleship');
+    }
+    else if (this.ships[i].name == 'carrier' &&  this.ships[i].status == 'HIT' && this.ships[i + 1].status == 'HIT' && this.ships[i + 2].status == 'HIT' && this.ships[i + 3].status == 'HIT' && this.ships[i + 4].status == 'HIT') {
+      this.sinkIt('carrier');
+    }
   }
 };
 
