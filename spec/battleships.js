@@ -15,39 +15,39 @@ describe('Can create a board at start of the game', function () {
 
 describe('Player can place', function() {
   it('1 ship of size 1', function () {
-    player.place('sub', 'A1');
+    player.placeShip('sub', 'A1', 1);
     expect(player.ships.length).toEqual(1)
   });
   it('1 ship of size 2 horizontally', function () {
-    player.place('destroyer', 'B1');
+    player.placeShip('destroyer', 'B1', 2);
     expect(player.ships.length).toEqual(2);
   });
   it('1 ship of size 2 vertically', function () {
-    player.place('destroyer', 'B1', 'V');
+    player.placeShip('destroyer', 'B1', 2, 'V');
     expect(player.ships.length).toEqual(2);
   });
   it('1 ship of size 3 horizontally', function () {
-    player.place('cruiser', 'C1');
+    player.placeShip('cruiser', 'C1', 3);
     expect(player.ships.length).toEqual(3);
   });
   it('1 ship of size 3 vertically', function () {
-    player.place('cruiser', 'C1', 'V');
+    player.placeShip('cruiser', 'C1', 3, 'V');
     expect(player.ships.length).toEqual(3);
   });
   it('1 ship of size 4 horizontally', function () {
-    player.place('battleship', 'D1');
+    player.placeShip('battleship', 'D1', 4);
     expect(player.ships.length).toEqual(4);
   });
   it('1 ship of size 4 vertically', function () {
-    player.place('battleship', 'D1', 'V');
+    player.placeShip('battleship', 'D1', 4, 'V');
     expect(player.ships.length).toEqual(4);
   });
   it('1 ship of size 5 horizontally', function () {
-    player.place('carrier', 'E1');
+    player.placeShip('carrier', 'E1', 5);
     expect(player.ships.length).toEqual(5);
   });
   it('1 ship of size 5 vertically', function () {
-    player.place('carrier', 'E1', 'V');
+    player.placeShip('carrier', 'E1', 5, 'V');
     expect(player.ships.length).toEqual(5);
   });
 });
@@ -55,8 +55,8 @@ describe('Player can place', function() {
 describe('Player can fire', function () {
 
   beforeEach(function() {
-    player.place('sub', 'A1');
-    player.place('destroyer', 'B1');
+    player.placeShip('sub', 'A1', 1);
+    player.placeShip('destroyer', 'B1', 2);
   });
 
   it('at A2 square and miss', function () {
@@ -84,11 +84,11 @@ describe('Player can fire', function () {
 describe('Player can sink', function () {
 
   beforeEach(function() {
-    player.place('sub', 'A1');
-    player.place('cruiser', 'C1');
-    player.place('destroyer', 'B1');
-    player.place('battleship', 'D1');
-    player.place('carrier', 'E1');
+    player.placeShip('sub', 'A1', 1);
+    player.placeShip('cruiser', 'C1', 3);
+    player.placeShip('destroyer', 'B1', 2);
+    player.placeShip('battleship', 'D1', 4);
+    player.placeShip('carrier', 'E1', 5);
   });
 
   it('the sub', function () {
@@ -137,7 +137,7 @@ describe('Player can sink', function () {
   });
 
   it('the carrier when vertical too', function () {
-    player.place('carrier', 'A10', 'V')
+    player.placeShip('carrier', 'A10', 5, 'V')
     player.fire(board, 'A10');
     player.fire(board, 'B10');
     player.fire(board, 'C10');
