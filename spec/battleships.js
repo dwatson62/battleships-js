@@ -18,16 +18,16 @@ describe('Can create a board at start of the game', function () {
 describe('On player creation', function() {
   it('can place 1 ship of size 1', function () {
     player.place(sub, 'A1');
-    expect(player.ships).toEqual([[sub, 'A1']])
+    expect(player.ships).toEqual([['sub', 'A1']])
   });
   it('can place 2 ships of size 1', function () {
     player.place(sub, 'A1');
     player.place(sub, 'B1');
-    expect(player.ships).toEqual([[sub, 'A1'], [sub, 'B1']])
+    expect(player.ships).toEqual([['sub', 'A1'], ['sub', 'B1']])
   });
   it('can place 1 ship of size 2 horizontally', function () {
     player.place(destroyer, 'B1');
-    expect(player.ships).toEqual([[destroyer, 'B1'], [destroyer, 'B2']]);
+    expect(player.ships).toEqual([['destroyer', 'B1'], ['destroyer', 'B2']]);
   });
 });
 
@@ -35,6 +35,7 @@ describe('Player can fire', function () {
 
   beforeEach(function() {
     player.place(sub, 'A1');
+    player.place(destroyer, 'B1');
   });
 
   it('at A2 square and miss', function () {
@@ -52,8 +53,20 @@ describe('Player can fire', function () {
     expect(board.grid[0][9]).toEqual('MISS');
   });
 
-  it('at A1 and hit', function () {
+  it('at B1 and hit', function () {
+    player.fire(board, 'B1');
+    expect(board.grid[1][0]).toEqual('HIT');
+  });
+
+  it('at A1 and sink the sub', function () {
     player.fire(board, 'A1');
-    expect(board.grid[0][0]).toEqual('HIT');
+    expect(board.grid[0][0]).toEqual('SUNK');
+  });
+
+  it('at B1 and B2 and sink the destroyer', function () {
+    player.fire(board, 'B1');
+    player.fire(board, 'B2');
+    expect(board.grid[1][0]).toEqual('SUNK');
+    expect(board.grid[1][1]).toEqual('SUNK');
   });
 });

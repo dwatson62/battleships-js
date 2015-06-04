@@ -4,12 +4,12 @@ function Player() {
 
 Player.prototype.place = function(ship, square) {
   if (ship.name == 'sub') {
-    this.ships.push([ship, square]);
+    this.ships.push([ship.name, square]);
   }
   else if (ship.name == 'destroyer') {
-    this.ships.push([ship, square]);
+    this.ships.push([ship.name, square]);
     square = this.nextHorizontalSquare(square);
-    this.ships.push([ship, square]);
+    this.ships.push([ship.name, square]);
   }
 };
 
@@ -18,10 +18,27 @@ Player.prototype.fire = function(board, square) {
   for (i = 0; i < this.ships.length; i ++) {
     if (this.ships[i][1] == square) {
       board.grid[coords[0]][coords[1]] = 'HIT';
+      this.ships[i][1] = 'HIT'
       break
     }
     else {
       board.grid[coords[0]][coords[1]] = 'MISS';
+    }
+  }
+  this.isSunk(coords);
+};
+
+Player.prototype.isSunk = function(coords) {
+  for (i = 0; i < this.ships.length; i ++ ) {
+    if (this.ships[i] == 'sub,HIT') {
+      this.ships[i][1] = 'SUNK';
+      board.grid[coords[0]][coords[1]] = 'SUNK';
+    }
+    else if (this.ships[i] == 'destroyer,HIT' && this.ships[i + 1] == 'destroyer,HIT') {
+      this.ships[i][1] = 'SUNK';
+      this.ships[i + 1][1] = 'SUNK';
+      console.log(this.ships)
+      board.grid[coords[0]][coords[1]] = 'SUNK';
     }
   }
 };
@@ -54,7 +71,6 @@ Player.prototype.splitSquare = function(square) {
 
 Player.prototype.nextHorizontalSquare = function(square) {
   result = this.splitSquare(square);
-  console.log(result);
   result[1] = String.fromCharCode(result[1].charCodeAt() + 1)
   return result.join('');
 };
