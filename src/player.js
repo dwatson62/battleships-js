@@ -6,6 +6,21 @@ function Ship(name, square) {
 
 function Player() {
   this.ships = [];
+  this.ownBoard = this.createBoard();
+  this.boardOpponentSees = this.createBoard();
+};
+
+Player.prototype.createBoard = function() {
+  var board = new Array();
+  var letter = 'A';
+  for (i = 0; i < 10; i ++) {
+    board[i] = new Array();
+    for (j = 0; j < 10; j ++) {
+      board[i][j] = letter + (j + 1);
+    }
+    letter = String.fromCharCode(letter.charCodeAt() + 1)
+  }
+  return board
 };
 
 Player.prototype.placeShip = function(name, square, size, direction) {
@@ -17,49 +32,49 @@ Player.prototype.placeShip = function(name, square, size, direction) {
   }
 };
 
-Player.prototype.fire = function(board, square) {
+Player.prototype.fire = function(player, square) {
   var coords = this.convert(square);
   for (i = 0; i < this.ships.length; i ++) {
     if (this.ships[i].square == square) {
-      board.grid[coords[0]][coords[1]] = 'HIT';
+      player.boardOpponentSees[coords[0]][coords[1]] = 'HIT';
       this.ships[i].status = 'HIT'
       break
     }
     else {
-      board.grid[coords[0]][coords[1]] = 'MISS';
+      player.boardOpponentSees[coords[0]][coords[1]] = 'MISS';
     }
   }
-  this.isSunk(coords);
+  this.isSunk(player);
   return this.gameOver();
 };
 
-Player.prototype.isSunk = function() {
+Player.prototype.isSunk = function(player) {
   for (i = 0; i < this.ships.length; i ++ ) {
     if (this.ships[i].name == 'sub' && this.ships[i].status == 'HIT') {
-      this.sinkIt('sub');
+      this.sinkIt(player, 'sub');
     }
     else if (this.ships[i].name == 'destroyer' &&  this.ships[i].status == 'HIT' && this.ships[i + 1].status == 'HIT') {
-      this.sinkIt('destroyer');
+      this.sinkIt(player, 'destroyer');
     }
     else if (this.ships[i].name == 'cruiser' &&  this.ships[i].status == 'HIT' && this.ships[i + 1].status == 'HIT' && this.ships[i + 2].status == 'HIT') {
-      this.sinkIt('cruiser');
+      this.sinkIt(player, 'cruiser');
     }
     else if (this.ships[i].name == 'battleship' &&  this.ships[i].status == 'HIT' && this.ships[i + 1].status == 'HIT' && this.ships[i + 2].status == 'HIT' && this.ships[i + 3].status == 'HIT') {
-      this.sinkIt('battleship');
+      this.sinkIt(player, 'battleship');
     }
     else if (this.ships[i].name == 'carrier' &&  this.ships[i].status == 'HIT' && this.ships[i + 1].status == 'HIT' && this.ships[i + 2].status == 'HIT' && this.ships[i + 3].status == 'HIT' && this.ships[i + 4].status == 'HIT') {
-      this.sinkIt('carrier');
+      this.sinkIt(player, 'carrier');
     }
   }
   return this.gameOver();
 };
 
-Player.prototype.sinkIt = function(ship) {
+Player.prototype.sinkIt = function(player, ship) {
   for (x = 0; x < this.ships.length; x ++ ) {
     if (this.ships[x].name == ship) {
       this.ships[x].status = 'SUNK'
       coords = this.convert(this.ships[x].square)
-      board.grid[coords[0]][coords[1]] = 'SUNK';
+      player.boardOpponentSees[coords[0]][coords[1]] = 'SUNK';
     }
   }
 };
