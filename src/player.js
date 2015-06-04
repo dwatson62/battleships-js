@@ -1,24 +1,33 @@
+function Ship(name, square) {
+  this.name = name;
+  this.square = square;
+  this.status = 'FLOATING';
+};
+
 function Player() {
   this.ships = [];
 };
 
 Player.prototype.place = function(ship, square) {
-  if (ship.name == 'sub') {
-    this.ships.push([ship.name, square]);
+  if (ship == 'sub') {
+    sub = new Ship('sub', square);
+    this.ships.push(sub);
   }
-  else if (ship.name == 'destroyer') {
-    this.ships.push([ship.name, square]);
+  else if (ship == 'destroyer') {
+    destroyer1 = new Ship('destroyer', square);
+    this.ships.push(destroyer1);
     square = this.nextHorizontalSquare(square);
-    this.ships.push([ship.name, square]);
+    destroyer2 = new Ship('destroyer', square)
+    this.ships.push(destroyer2);
   }
 };
 
 Player.prototype.fire = function(board, square) {
   var coords = this.convert(square);
   for (i = 0; i < this.ships.length; i ++) {
-    if (this.ships[i][1] == square) {
+    if (this.ships[i].square == square) {
       board.grid[coords[0]][coords[1]] = 'HIT';
-      this.ships[i][1] = 'HIT'
+      this.ships[i].status = 'HIT'
       break
     }
     else {
@@ -30,15 +39,16 @@ Player.prototype.fire = function(board, square) {
 
 Player.prototype.isSunk = function(coords) {
   for (i = 0; i < this.ships.length; i ++ ) {
-    if (this.ships[i] == 'sub,HIT') {
-      this.ships[i][1] = 'SUNK';
+    if (this.ships[i].name == 'sub' && this.ships[i].status == 'HIT') {
+      this.ships[i].status = 'SUNK';
       board.grid[coords[0]][coords[1]] = 'SUNK';
     }
-    else if (this.ships[i] == 'destroyer,HIT' && this.ships[i + 1] == 'destroyer,HIT') {
-      this.ships[i][1] = 'SUNK';
-      this.ships[i + 1][1] = 'SUNK';
-      console.log(this.ships)
-      board.grid[coords[0]][coords[1]] = 'SUNK';
+    else if (this.ships[i].name == 'destroyer' && this.ships[i].status == 'HIT' && this.ships[i + 1].status == 'HIT') {
+      for (j = i; j < 3; j ++) {
+        this.ships[j].status = 'SUNK';
+        coords = this.convert(this.ships[j].square)
+        board.grid[coords[0]][coords[1]] = 'SUNK';
+      }
     }
   }
 };
