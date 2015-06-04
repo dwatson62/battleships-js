@@ -13,17 +13,25 @@ Player.prototype.place = function(ship, square, direction) {
     sub = new Ship('sub', square);
     this.ships.push(sub);
   }
-  else if (ship == 'destroyer') {
-    this.placeDestroyer(square, direction);
+  else if (ship == 'destroyer') { this.placeDestroyer(square, direction) }
+  else if (ship == 'cruiser') { this.placeCruiser(square, direction) }
 };
 
 Player.prototype.placeDestroyer = function(square, direction) {
-  destroyer1 = new Ship('destroyer', square);
-  this.ships.push(destroyer1);
-  if (direction == 'V') { square = this.nextVerticalSquare(square) }
-  else { square = this.nextHorizontalSquare(square) }
-  destroyer2 = new Ship('destroyer', square);
-  this.ships.push(destroyer2);
+  for (i = 1; i < 3; i ++ ) {
+    destroyer = new Ship('destroyer', square);
+    this.ships.push(destroyer);
+    if (direction == 'V') { square = this.nextVerticalSquare(square); }
+    else { square = this.nextHorizontalSquare(square); }
+  }
+};
+
+Player.prototype.placeCruiser = function(square, direction) {
+  for (i = 1; i < 4; i ++ ) {
+    cruiser = new Ship('cruiser', square);
+    this.ships.push(cruiser);
+    if (direction == 'V') { square = this.nextVerticalSquare(square); }
+    else { square = this.nextHorizontalSquare(square); }
   }
 };
 
@@ -82,7 +90,6 @@ Player.prototype.splitSquare = function(square) {
   else { result = square.split('',2) }
     return result;
 };
-
 
 Player.prototype.nextHorizontalSquare = function(square) {
   result = this.splitSquare(square);

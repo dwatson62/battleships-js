@@ -26,10 +26,20 @@ describe('Player can place', function() {
   it('1 ship of size 2 horizontally', function () {
     player.place('destroyer', 'B1');
     expect(player.ships.length).toEqual(2);
+    console.log(player.ships)
   });
   it('1 ship of size 2 vertically', function () {
     player.place('destroyer', 'B1', 'V');
     expect(player.ships.length).toEqual(2);
+  });
+  it('1 ship of size 3 horizontally', function () {
+    player.place('cruiser', 'C1');
+    expect(player.ships.length).toEqual(3);
+    console.log(player.ships)
+  });
+  it('1 ship of size 3 vertically', function () {
+    player.place('cruiser', 'C1', 'V');
+    expect(player.ships.length).toEqual(3);
     console.log(player.ships)
   });
 });
