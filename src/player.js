@@ -9,12 +9,16 @@ function Player() {
 };
 
 Player.prototype.place = function(ship, square, direction) {
-  if (ship == 'sub') {
-    sub = new Ship('sub', square);
-    this.ships.push(sub);
-  }
+  if (ship == 'sub') { this.placeSub(square) }
   else if (ship == 'destroyer') { this.placeDestroyer(square, direction) }
   else if (ship == 'cruiser') { this.placeCruiser(square, direction) }
+  else if (ship == 'battleship') { this.placeBattleship(square, direction) }
+  else if (ship == 'carrier') { this.placeCarrier(square, direction) }
+};
+
+Player.prototype.placeSub = function(square) {
+  sub = new Ship('sub', square);
+  this.ships.push(sub);
 };
 
 Player.prototype.placeDestroyer = function(square, direction) {
@@ -30,6 +34,24 @@ Player.prototype.placeCruiser = function(square, direction) {
   for (i = 1; i < 4; i ++ ) {
     cruiser = new Ship('cruiser', square);
     this.ships.push(cruiser);
+    if (direction == 'V') { square = this.nextVerticalSquare(square); }
+    else { square = this.nextHorizontalSquare(square); }
+  }
+};
+
+Player.prototype.placeBattleship = function(square, direction) {
+  for (i = 1; i < 5; i ++ ) {
+    battleship = new Ship('battleship', square);
+    this.ships.push(battleship);
+    if (direction == 'V') { square = this.nextVerticalSquare(square); }
+    else { square = this.nextHorizontalSquare(square); }
+  }
+};
+
+Player.prototype.placeCarrier = function(square, direction) {
+  for (i = 1; i < 6; i ++ ) {
+    carrier = new Ship('carrier', square);
+    this.ships.push(carrier);
     if (direction == 'V') { square = this.nextVerticalSquare(square); }
     else { square = this.nextHorizontalSquare(square); }
   }

@@ -18,11 +18,6 @@ describe('Player can place', function() {
     player.place('sub', 'A1');
     expect(player.ships.length).toEqual(1)
   });
-  it('2 ships of size 1', function () {
-    player.place('sub', 'A1');
-    player.place('sub', 'A2');
-    expect(player.ships.length).toEqual(2)
-  });
   it('1 ship of size 2 horizontally', function () {
     player.place('destroyer', 'B1');
     expect(player.ships.length).toEqual(2);
@@ -35,12 +30,26 @@ describe('Player can place', function() {
   it('1 ship of size 3 horizontally', function () {
     player.place('cruiser', 'C1');
     expect(player.ships.length).toEqual(3);
-    console.log(player.ships)
   });
   it('1 ship of size 3 vertically', function () {
     player.place('cruiser', 'C1', 'V');
     expect(player.ships.length).toEqual(3);
-    console.log(player.ships)
+  });
+  it('1 ship of size 4 horizontally', function () {
+    player.place('battleship', 'D1');
+    expect(player.ships.length).toEqual(4);
+  });
+  it('1 ship of size 4 vertically', function () {
+    player.place('battleship', 'D1', 'V');
+    expect(player.ships.length).toEqual(4);
+  });
+  it('1 ship of size 5 horizontally', function () {
+    player.place('carrier', 'E1');
+    expect(player.ships.length).toEqual(5);
+  });
+  it('1 ship of size 5 vertically', function () {
+    player.place('carrier', 'E1', 'V');
+    expect(player.ships.length).toEqual(5);
   });
 });
 
