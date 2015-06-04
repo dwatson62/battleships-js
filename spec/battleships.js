@@ -1,7 +1,8 @@
 beforeEach(function() {
   board = new Board;
   player = new Player;
-  ship = new Ship;
+  sub = new Ship('sub');
+  destroyer = new Ship('destroyer');
 });
 
 describe('Can create a board at start of the game', function () {
@@ -15,16 +16,25 @@ describe('Can create a board at start of the game', function () {
 });
 
 describe('On player creation', function() {
-  it('has 1 available ship of size 1 to place', function () {
-    player.place(ship, 'A1');
-    expect(player.ships).toEqual([[ship, 'A1']])
+  it('can place 1 ship of size 1', function () {
+    player.place(sub, 'A1');
+    expect(player.ships).toEqual([[sub, 'A1']])
+  });
+  it('can place 2 ships of size 1', function () {
+    player.place(sub, 'A1');
+    player.place(sub, 'B1');
+    expect(player.ships).toEqual([[sub, 'A1'], [sub, 'B1']])
+  });
+  it('can place 1 ship of size 2 horizontally', function () {
+    player.place(destroyer, 'B1');
+    expect(player.ships).toEqual([[destroyer, 'B1'], [destroyer, 'B2']]);
   });
 });
 
 describe('Player can fire', function () {
 
   beforeEach(function() {
-    player.place(ship, 'A1');
+    player.place(sub, 'A1');
   });
 
   it('at A2 square and miss', function () {

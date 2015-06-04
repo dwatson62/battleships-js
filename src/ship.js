@@ -1,1 +1,3 @@
-function Ship() {};
+function Ship(name) {
+  this.name = name;
+};
