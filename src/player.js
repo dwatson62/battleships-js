@@ -6,11 +6,15 @@ function Ship(name, square) {
 
 function Player() {
   this.ships = [];
-  this.ownBoard = this.createBoard();
+  this.ownBoard = this.emptyBoard();
   this.boardOpponentSees = this.emptyBoard();
 };
 
-Player.prototype.createBoard = function() {
+function Board() {
+  this.board = this.createBoard();
+}
+
+Board.prototype.createBoard = function() {
   var board = new Array();
   var letter = 'A';
   for (i = 0; i < 10; i ++) {

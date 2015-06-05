@@ -1,6 +1,6 @@
 player1 = new Player();
 player2 = new Player();
-control = new Player();
+board = new Board();
 
 function fillShipSelect() {
   $.getJSON('./src/ships.JSON', function(data){
@@ -17,9 +17,19 @@ function placeOnBoard(player, ship, spot, size, direction) {
   else { player.placeShip(ship, spot, size) };
   for (x = 0; x < 10; x ++ ) {
     for (y = 0; y < 10; y ++ ) {
-      controlSquare = control.ownBoard[x][y];
+      ref = board.board[x][y];
       square = player.ownBoard[x][y];
-      $('#' + controlSquare).val(square);
+      $('#' + ref).val(square);
+    };
+  };
+}
+
+function seeOwnBoard(player) {
+  for (x = 0; x < 10; x ++ ) {
+    for (y = 0; y < 10; y ++ ) {
+      ref = board.board[x][y];
+      square = player.ownBoard[x][y];
+      $('#' + ref).val(square);
     };
   };
 }
@@ -27,18 +37,20 @@ function placeOnBoard(player, ship, spot, size, direction) {
 function seeOpponentBoard(player) {
   for (x = 0; x < 10; x ++ ) {
     for (y = 0; y < 10; y ++ ) {
-      controlSquare = control.ownBoard[x][y];
+      ref = board.board[x][y];
       square = player.boardOpponentSees[x][y];
-      $('#' + controlSquare).val(square);
+      $('#' + ref).val(square);
     };
   };
 }
+
+// For Ship Placement
 
 $(document).ready (function () {
   // $('input:text').attr('disabled', true);
 
   fillShipSelect();
-  $('#place').click (function () {
+  $('body').on('click', '#place', function () {
     spot = $('#spot').val();
     direction = $( "#direction option:selected" ).text()
     ship = $( "#ship option:selected" ).text()
@@ -59,48 +71,49 @@ $(document).ready (function () {
 
     if (player1.ships.length == 15 && player2.ships.length == 0) {
       var r = $('<input type="button" id="player2" value="Player 2"/>');
-        $("#done").append(r);
+      $("#buttons").append(r);
+      $(this).remove();
     }
     else if (player1.ships.length == 15 && player2  .ships.length == 15) {
       var r = $('<input type="button" id="startgame" value="Start Game"/>');
-        $("#done").append(r);
+      $("#buttons").append(r);
+      $(this).remove();
     }
   });
-
-});
-
-$(document).ready (function () {
 
   $('body').on ('click', '#player2', function () {
     fillShipSelect();
     $('#top').html('Place your ships player 2')
     for (x = 0; x < 10; x ++ ) {
       for (y = 0; y < 10; y ++ ) {
-        controlSquare = control.ownBoard[x][y];
-        $('#' + controlSquare).val('');
+        ref = board.board[x][y];
+        $('#' + ref).val('');
       };
     };
     $(this).remove();
+    var place = $('<input type="button" id="place" value="Place"/>');
+    $("#buttons").append(place);
   });
+
+});
+
+// Playing the Game
+
+$(document).ready (function () {
 
   $('body').on ('click', '#startgame', function () {
     fillShipSelect();
     $('#top').html('Player 1 Fire!')
-    for (x = 0; x < 10; x ++ ) {
-      for (y = 0; y < 10; y ++ ) {
-        controlSquare = control.ownBoard[x][y];
-        square = player2.boardOpponentSees[x][y];
-        $('#' + controlSquare).val('');
-      };
-    };
-
     $(this).remove();
     $('#direction').remove();
     $('#ship').remove();
-    $('#place').remove();
     var fire1 = $('<input type="button" id="fire1" value="Fire"/>');
     $("#done").append(fire1);
     seeOpponentBoard(player2);
+    var seeOwn = $('<input type="button" id="seeShips" value="See Ships"/>');
+    $("#done").append(seeOwn);
+    var seeOpp = $('<input type="button" id="oppShips" value="See Game"/>');
+    $("#done").append(seeOpp);
   });
 
   $('body').on ('click', '#fire1', function () {
@@ -138,6 +151,39 @@ $(document).ready (function () {
   })
 
 });
+
+// Seeing your own board
+
+$(document).ready (function () {
+
+  $('body').on ('click', '#seeShips', function () {
+    var turn = $('#top').text();
+    console.log(turn)
+    if (turn == 'Player 1 Fire!') {
+      seeOwnBoard(player1);
+    }
+    else if (turn == 'Player 2 Fire!') {
+      seeOwnBoard(player2);
+    }
+  });
+
+  $('body').on ('click', '#oppShips', function () {
+    var turn = $('#top').text();
+    console.log(turn)
+    if (turn == 'Player 1 Fire!') {
+      seeOpponentBoard(player2);
+    }
+    else if (turn == 'Player 2 Fire!') {
+      seeOpponentBoard(player1);
+    }
+  });
+
+});
+
+// if($('#save').length){
+//             //your code goes here
+//         }
+
 
 // $("#buildyourform").on('click', "#add", function() {
 //     // your code...
