@@ -24,6 +24,16 @@ function placeOnBoard(player, ship, spot, size, direction) {
   };
 }
 
+function seeOpponentBoard(player) {
+  for (x = 0; x < 10; x ++ ) {
+    for (y = 0; y < 10; y ++ ) {
+      controlSquare = control.ownBoard[x][y];
+      square = player.boardOpponentSees[x][y];
+      $('#' + controlSquare).val(square);
+    };
+  };
+}
+
 $(document).ready (function () {
   // $('input:text').attr('disabled', true);
 
@@ -83,25 +93,49 @@ $(document).ready (function () {
         $('#' + controlSquare).val('');
       };
     };
+
     $(this).remove();
     $('#direction').remove();
     $('#ship').remove();
     $('#place').remove();
-    var fire = $('<input type="button" id="fire" value="Fire"/>');
-        $("#done").append(fire);
+    var fire1 = $('<input type="button" id="fire1" value="Fire"/>');
+    $("#done").append(fire1);
+    seeOpponentBoard(player2);
   });
 
-  $('body').on ('click', '#fire', function () {
+  $('body').on ('click', '#fire1', function () {
     square = $('#spot').val();
     player1.fire(player2, square)
-    for (x = 0; x < 10; x ++ ) {
-      for (y = 0; y < 10; y ++ ) {
-        controlSquare = control.ownBoard[x][y];
-        square = player2.boardOpponentSees[x][y];
-        $('#' + controlSquare).val(square);
-      };
-    };
+    seeOpponentBoard(player2);
+    $(this).remove();
+    var nextPlayer1 = $('<input type="button" id="nextPlayer1" value="Next Player"/>');
+    $("#done").append(nextPlayer1);
   });
+
+  $('body').on ('click', '#nextPlayer1', function () {
+    $('#top').html('Player 2 Fire!')
+    this.remove();
+    var fire2 = $('<input type="button" id="fire2" value="Fire"/>');
+    $("#done").append(fire2);
+    seeOpponentBoard(player1);
+  })
+
+  $('body').on ('click', '#fire2', function () {
+    square = $('#spot').val();
+    player2.fire(player1, square)
+    seeOpponentBoard(player1);
+    $(this).remove();
+    var nextPlayer2 = $('<input type="button" id="nextPlayer2" value="Next Player"/>');
+    $("#done").append(nextPlayer2);
+  });
+
+  $('body').on ('click', '#nextPlayer2', function () {
+    $('#top').html('Player 1 Fire!')
+    this.remove();
+    var fire1 = $('<input type="button" id="fire1" value="Fire"/>');
+    $("#done").append(fire1);
+    seeOpponentBoard(player2);
+  })
 
 });
 
