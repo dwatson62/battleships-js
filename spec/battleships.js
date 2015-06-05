@@ -61,6 +61,7 @@ describe('Player 1 can fire on player 2,', function () {
 
   it('at A2 square and miss', function () {
     player1.fire(player2, 'A2');
+    console.log(player2.boardOpponentSees)
     expect(player2.boardOpponentSees[0][1]).toEqual('MISS');
   });
 
@@ -155,8 +156,8 @@ describe('Player can sink', function () {
 describe('Player can win the game', function () {
 
   beforeEach(function() {
-    player1.placeShip('sub', 'A1', 1);
-    player1.placeShip('cruiser', 'C1', 3);
+    player2.placeShip('sub', 'A1', 1);
+    player2.placeShip('cruiser', 'C1', 3);
   });
 
   it('by sinking all ships', function () {
@@ -164,6 +165,7 @@ describe('Player can win the game', function () {
     player1.fire(player2, 'C1');
     player1.fire(player2, 'C2');
     player1.fire(player2, 'C3');
+    console.log(player2.ships)
     expect(player1.won).toEqual(true);
   });
 
