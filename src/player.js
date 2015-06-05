@@ -8,6 +8,7 @@ function Player() {
   this.ships = [];
   this.ownBoard = this.emptyBoard();
   this.boardOpponentSees = this.emptyBoard();
+  this.won = false;
 };
 
 function Board() {
@@ -107,7 +108,7 @@ Player.prototype.gameOver = function() {
     if (this.ships[x].status != 'SUNK') {
       break
     }
-    return 'Game Over!';
+    this.won = true;
   }
 };
 

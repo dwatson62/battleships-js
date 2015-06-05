@@ -163,6 +163,13 @@ describe('Player can win the game', function () {
     player1.fire(player2, 'A1');
     player1.fire(player2, 'C1');
     player1.fire(player2, 'C2');
-    expect(player1.fire(player2, 'C3')).toEqual('Game Over!');
+    player1.fire(player2, 'C3');
+    expect(player1.won).toEqual(true);
+  });
+
+  it('but not before', function () {
+    player1.fire(player2, 'A1');
+    player1.fire(player2, 'C1');
+    expect(player1.won).toEqual(false);
   });
 });

@@ -1,6 +1,7 @@
 player1 = new Player();
 player2 = new Player();
 board = new Board();
+var turn
 
 function fillShipSelect() {
   $.getJSON('./src/ships.JSON', function(data){
@@ -127,6 +128,8 @@ $(document).ready (function () {
 
   $('body').on ('click', '#nextPlayer1', function () {
     $('#top').html('Player 2 Fire!')
+    var top = $('#top').text();
+    console.log(top)
     this.remove();
     var fire2 = $('<input type="button" id="fire2" value="Fire"/>');
     $("#done").append(fire2);
@@ -144,6 +147,8 @@ $(document).ready (function () {
 
   $('body').on ('click', '#nextPlayer2', function () {
     $('#top').html('Player 1 Fire!')
+    var top = $('#top').text();
+    console.log(top)
     this.remove();
     var fire1 = $('<input type="button" id="fire1" value="Fire"/>');
     $("#done").append(fire1);
@@ -157,8 +162,7 @@ $(document).ready (function () {
 $(document).ready (function () {
 
   $('body').on ('click', '#seeShips', function () {
-    var turn = $('#top').text();
-    console.log(turn)
+    turn = $('#top').text();
     if (turn == 'Player 1 Fire!') {
       seeOwnBoard(player1);
     }
@@ -169,7 +173,6 @@ $(document).ready (function () {
 
   $('body').on ('click', '#oppShips', function () {
     var turn = $('#top').text();
-    console.log(turn)
     if (turn == 'Player 1 Fire!') {
       seeOpponentBoard(player2);
     }
@@ -180,11 +183,16 @@ $(document).ready (function () {
 
 });
 
-// if($('#save').length){
-//             //your code goes here
-//         }
+// Game over
 
-
-// $("#buildyourform").on('click', "#add", function() {
-//     // your code...
-// });
+$(document).ready (function () {
+  console.log(player1.won)
+  console.log(player2.won)
+  console.log(turn)
+  if (player1.won == true) {
+    $('#top').html('Player 1 Wins!')
+  }
+  else if (player2.won == true) {
+    $('#top').html('Player 2 Wins!')
+  }
+});
