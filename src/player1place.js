@@ -4,14 +4,13 @@ control = new Player();
 
 function fillShipSelect() {
   $.getJSON('./src/ships.JSON', function(data){
-        $('#ship').append('<option>' + data.ships[0].type1 + '</option>');
-        $('#ship').append('<option>' + data.ships[0].type2 + '</option>');
-        $('#ship').append('<option>' + data.ships[0].type3 + '</option>');
-        $('#ship').append('<option>' + data.ships[0].type4 + '</option>');
-        $('#ship').append('<option>' + data.ships[0].type5 + '</option>');
-    });
+    $('#ship').append('<option>' + data.ships[0].type1 + '</option>');
+    $('#ship').append('<option>' + data.ships[0].type2 + '</option>');
+    $('#ship').append('<option>' + data.ships[0].type3 + '</option>');
+    $('#ship').append('<option>' + data.ships[0].type4 + '</option>');
+    $('#ship').append('<option>' + data.ships[0].type5 + '</option>');
+  });
 }
-
 
 function placeOnBoard(player, ship, spot, size, direction) {
   if (direction == 'Vertical') { player.placeShip(ship, spot, size, 'V') }
@@ -27,6 +26,7 @@ function placeOnBoard(player, ship, spot, size, direction) {
 
 $(document).ready (function () {
   // $('input:text').attr('disabled', true);
+
   fillShipSelect();
   $('#place').click (function () {
     spot = $('#spot').val();
@@ -47,23 +47,46 @@ $(document).ready (function () {
       placeOnBoard(player2, ship, spot, size, direction);
     }
 
-    var shipsLeftToPlace = $('#ship option').length
-    if (shipsLeftToPlace == 0) {
-      $('#done').html('Click here Player 2');
-
+    if (player1.ships.length == 15 && player2.ships.length == 0) {
+      var r = $('<input type="button" id="player2" value="Player 2"/>');
+        $("#done").append(r);
     }
-    console.log(player1.ships.length)
+    else if (player1.ships.length == 15 && player2  .ships.length == 15) {
+      var r = $('<input type="button" id="startgame" value="Start Game"/>');
+        $("#done").append(r);
+    }
   });
-
-  $('#done').click( function () {
-    fillShipSelect();
-  });
-    // for (x = 0; x < 10; x ++ ) {
-    //   for (y = 0; y < 10; y ++ ) {
-    //     controlSquare = control.ownBoard[x][y];
-    //     $('#' + controlSquare).val('');
-    //   };
-    // };
-
 
 });
+
+$(document).ready (function () {
+
+  $('body').on ('click', '#player2', function () {
+    fillShipSelect();
+    $('#top').html('Place your ships player 2')
+    for (x = 0; x < 10; x ++ ) {
+      for (y = 0; y < 10; y ++ ) {
+        controlSquare = control.ownBoard[x][y];
+        $('#' + controlSquare).val('');
+      };
+    };
+    $(this).remove();
+  });
+
+  $('body').on ('click', '#startgame', function () {
+    fillShipSelect();
+    $('#top').html('Start the game!')
+    for (x = 0; x < 10; x ++ ) {
+      for (y = 0; y < 10; y ++ ) {
+        controlSquare = control.ownBoard[x][y];
+        $('#' + controlSquare).val('');
+      };
+    };
+    $(this).remove();
+  });
+
+});
+
+// $("#buildyourform").on('click', "#add", function() {
+//     // your code...
+// });
