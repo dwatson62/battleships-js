@@ -6,10 +6,10 @@ var turn
 function fillShipSelect() {
   $.getJSON('./src/ships.JSON', function(data){
     $('#ship').append('<option>' + data.ships[0].type1 + '</option>');
-    $('#ship').append('<option>' + data.ships[0].type2 + '</option>');
-    $('#ship').append('<option>' + data.ships[0].type3 + '</option>');
-    $('#ship').append('<option>' + data.ships[0].type4 + '</option>');
-    $('#ship').append('<option>' + data.ships[0].type5 + '</option>');
+    // $('#ship').append('<option>' + data.ships[0].type2 + '</option>');
+    // $('#ship').append('<option>' + data.ships[0].type3 + '</option>');
+    // $('#ship').append('<option>' + data.ships[0].type4 + '</option>');
+    // $('#ship').append('<option>' + data.ships[0].type5 + '</option>');
   });
 }
 
@@ -61,7 +61,7 @@ $(document).ready (function () {
     else if ( ship == 'cruiser') { size = 3 }
     else if ( ship == 'battleship') { size = 4 }
     else if ( ship == 'carrier') { size = 5 }
-    if (player1.ships.length < 15) {
+    if (player1.ships.length < 1) {
       // player 1 places ships
       placeOnBoard(player1, ship, spot, size, direction);
     }
@@ -70,12 +70,12 @@ $(document).ready (function () {
       placeOnBoard(player2, ship, spot, size, direction);
     }
 
-    if (player1.ships.length == 15 && player2.ships.length == 0) {
+    if (player1.ships.length == 1 && player2.ships.length == 0) {
       var r = $('<input type="button" id="player2" value="Player 2"/>');
       $("#buttons").append(r);
       $(this).remove();
     }
-    else if (player1.ships.length == 15 && player2  .ships.length == 15) {
+    else if (player1.ships.length == 1 && player2  .ships.length == 1) {
       var r = $('<input type="button" id="startgame" value="Start Game"/>');
       $("#buttons").append(r);
       $(this).remove();
@@ -124,6 +124,12 @@ $(document).ready (function () {
     $(this).remove();
     var nextPlayer1 = $('<input type="button" id="nextPlayer1" value="Next Player"/>');
     $("#done").append(nextPlayer1);
+    if (player1.won == true) {
+      $('#top').html('Player 1 Wins!')
+      this.remove();
+      $("#done").remove();
+      $('#spot').remove();
+    }
   });
 
   $('body').on ('click', '#nextPlayer1', function () {
@@ -143,6 +149,12 @@ $(document).ready (function () {
     $(this).remove();
     var nextPlayer2 = $('<input type="button" id="nextPlayer2" value="Next Player"/>');
     $("#done").append(nextPlayer2);
+    if (player2.won == true) {
+      $('#top').html('Player 2 Wins!')
+      this.remove();
+      $("#done").remove();
+      $('#spot').remove();
+    }
   });
 
   $('body').on ('click', '#nextPlayer2', function () {
@@ -189,10 +201,8 @@ $(document).ready (function () {
   console.log(player1.won)
   console.log(player2.won)
   console.log(turn)
-  if (player1.won == true) {
-    $('#top').html('Player 1 Wins!')
-  }
-  else if (player2.won == true) {
-    $('#top').html('Player 2 Wins!')
-  }
+
+  // else if (player2.won == true) {
+  //   $('#top').html('Player 2 Wins!')
+  // }
 });
