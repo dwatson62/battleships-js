@@ -48,8 +48,6 @@ function seeOpponentBoard(player) {
 // For Ship Placement
 
 $(document).ready (function () {
-  // $('input:text').attr('disabled', true);
-
   fillShipSelect();
   $('body').on('click', '#place', function () {
     spot = $('#spot').val();
@@ -61,6 +59,7 @@ $(document).ready (function () {
     else if ( ship == 'cruiser') { size = 3 }
     else if ( ship == 'battleship') { size = 4 }
     else if ( ship == 'carrier') { size = 5 }
+
     if (player1.ships.length < 1) {
       // player 1 places ships
       placeOnBoard(player1, ship, spot, size, direction);
@@ -124,6 +123,9 @@ $(document).ready (function () {
     $(this).remove();
     var nextPlayer1 = $('<input type="button" id="nextPlayer1" value="Next Player"/>');
     $("#done").append(nextPlayer1);
+
+    // if the game is won
+
     if (player1.won == true) {
       $('#top').html('Player 1 Wins!')
       this.remove();
@@ -149,6 +151,9 @@ $(document).ready (function () {
     $(this).remove();
     var nextPlayer2 = $('<input type="button" id="nextPlayer2" value="Next Player"/>');
     $("#done").append(nextPlayer2);
+
+    // if the game is won
+
     if (player2.won == true) {
       $('#top').html('Player 2 Wins!')
       this.remove();
@@ -193,16 +198,4 @@ $(document).ready (function () {
     }
   });
 
-});
-
-// Game over
-
-$(document).ready (function () {
-  console.log(player1.won)
-  console.log(player2.won)
-  console.log(turn)
-
-  // else if (player2.won == true) {
-  //   $('#top').html('Player 2 Wins!')
-  // }
 });
