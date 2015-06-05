@@ -75,14 +75,32 @@ $(document).ready (function () {
 
   $('body').on ('click', '#startgame', function () {
     fillShipSelect();
-    $('#top').html('Start the game!')
+    $('#top').html('Player 1 Fire!')
     for (x = 0; x < 10; x ++ ) {
       for (y = 0; y < 10; y ++ ) {
         controlSquare = control.ownBoard[x][y];
+        square = player2.boardOpponentSees[x][y];
         $('#' + controlSquare).val('');
       };
     };
     $(this).remove();
+    $('#direction').remove();
+    $('#ship').remove();
+    $('#place').remove();
+    var fire = $('<input type="button" id="fire" value="Fire"/>');
+        $("#done").append(fire);
+  });
+
+  $('body').on ('click', '#fire', function () {
+    square = $('#spot').val();
+    player1.fire(player2, square)
+    for (x = 0; x < 10; x ++ ) {
+      for (y = 0; y < 10; y ++ ) {
+        controlSquare = control.ownBoard[x][y];
+        square = player2.boardOpponentSees[x][y];
+        $('#' + controlSquare).val(square);
+      };
+    };
   });
 
 });

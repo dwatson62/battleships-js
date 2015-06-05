@@ -7,7 +7,7 @@ function Ship(name, square) {
 function Player() {
   this.ships = [];
   this.ownBoard = this.createBoard();
-  this.boardOpponentSees = this.createBoard();
+  this.boardOpponentSees = this.emptyBoard();
 };
 
 Player.prototype.createBoard = function() {
@@ -20,7 +20,18 @@ Player.prototype.createBoard = function() {
     }
     letter = String.fromCharCode(letter.charCodeAt() + 1)
   }
-  return board
+  return board;
+};
+
+Player.prototype.emptyBoard = function() {
+  var board = new Array();
+  for (i = 0; i < 10; i ++) {
+    board[i] = new Array();
+    for (j = 0; j < 10; j ++) {
+      board[i][j] = '-';
+    }
+  }
+  return board;
 };
 
 Player.prototype.placeShip = function(name, square, size, direction) {
