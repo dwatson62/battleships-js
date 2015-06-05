@@ -55,13 +55,12 @@ describe('Player can place', function() {
 describe('Player 1 can fire on player 2,', function () {
 
   beforeEach(function() {
-    player1.placeShip('sub', 'A1', 1);
-    player1.placeShip('destroyer', 'B1', 2);
+    player2.placeShip('sub', 'A1', 1);
+    player2.placeShip('destroyer', 'B1', 2);
   });
 
   it('at A2 square and miss', function () {
     player1.fire(player2, 'A2');
-    console.log(player2.boardOpponentSees)
     expect(player2.boardOpponentSees[0][1]).toEqual('MISS');
   });
 
@@ -84,20 +83,14 @@ describe('Player 1 can fire on player 2,', function () {
 
 describe('Player can sink', function () {
 
-  beforeEach(function() {
-    player1.placeShip('sub', 'A1', 1);
-    player1.placeShip('cruiser', 'C1', 3);
-    player1.placeShip('destroyer', 'B1', 2);
-    player1.placeShip('battleship', 'D1', 4);
-    player1.placeShip('carrier', 'E1', 5);
-  });
-
   it('the sub', function () {
+    player2.placeShip('sub', 'A1', 1);
     player1.fire(player2, 'A1');
     expect(player2.boardOpponentSees[0][0]).toEqual('SUNK');
   });
 
   it('the destroyer', function () {
+    player2.placeShip('destroyer', 'B1', 2);
     player1.fire(player2, 'B1');
     player1.fire(player2, 'B2');
     expect(player2.boardOpponentSees[1][0]).toEqual('SUNK');
@@ -105,6 +98,7 @@ describe('Player can sink', function () {
   });
 
   it('the cruiser', function () {
+    player2.placeShip('cruiser', 'C1', 3);
     player1.fire(player2, 'C1');
     player1.fire(player2, 'C2');
     player1.fire(player2, 'C3');
@@ -114,6 +108,7 @@ describe('Player can sink', function () {
   });
 
   it('the battleship', function () {
+    player2.placeShip('battleship', 'D1', 4);
     player1.fire(player2, 'D1');
     player1.fire(player2, 'D2');
     player1.fire(player2, 'D3');
@@ -125,6 +120,7 @@ describe('Player can sink', function () {
   });
 
   it('the carrier', function () {
+    player2.placeShip('carrier', 'E1', 5);
     player1.fire(player2, 'E1');
     player1.fire(player2, 'E2');
     player1.fire(player2, 'E3');
@@ -138,7 +134,7 @@ describe('Player can sink', function () {
   });
 
   it('the carrier when vertical too', function () {
-    player1.placeShip('carrier', 'A10', 5, 'V')
+    player2.placeShip('carrier', 'A10', 5, 'V')
     player1.fire(player2, 'A10');
     player1.fire(player2, 'B10');
     player1.fire(player2, 'C10');
@@ -165,7 +161,6 @@ describe('Player can win the game', function () {
     player1.fire(player2, 'C1');
     player1.fire(player2, 'C2');
     player1.fire(player2, 'C3');
-    console.log(player2.ships)
     expect(player1.won).toEqual(true);
   });
 

@@ -57,7 +57,7 @@ Player.prototype.updateBoard = function() {
 };
 
 Player.prototype.fire = function(player, square) {
-  var coords = player.convert(square);
+  var coords = this.convert(square);
   for (i = 0; i < player.ships.length; i ++) {
     if (player.ships[i].square == square) {
       player.boardOpponentSees[coords[0]][coords[1]] = 'HIT';
@@ -75,28 +75,28 @@ Player.prototype.fire = function(player, square) {
 Player.prototype.isSunk = function(player) {
   for (i = 0; i < player.ships.length; i ++ ) {
     if (player.ships[i].name == 'sub' && player.ships[i].status == 'HIT') {
-      this.sinkIt(player, 'sub');
+      player.sinkIt(player, 'sub');
     }
-    else if (this.ships[i].name == 'destroyer' &&  this.ships[i].status == 'HIT' && this.ships[i + 1].status == 'HIT') {
-      this.sinkIt(player, 'destroyer');
+    else if (player.ships[i].name == 'destroyer' &&  player.ships[i].status == 'HIT' && player.ships[i + 1].status == 'HIT') {
+      player.sinkIt(player, 'destroyer');
     }
-    else if (this.ships[i].name == 'cruiser' &&  this.ships[i].status == 'HIT' && this.ships[i + 1].status == 'HIT' && this.ships[i + 2].status == 'HIT') {
-      this.sinkIt(player, 'cruiser');
+    else if (player.ships[i].name == 'cruiser' &&  player.ships[i].status == 'HIT' && player.ships[i + 1].status == 'HIT' && player.ships[i + 2].status == 'HIT') {
+      player.sinkIt(player, 'cruiser');
     }
-    else if (this.ships[i].name == 'battleship' &&  this.ships[i].status == 'HIT' && this.ships[i + 1].status == 'HIT' && this.ships[i + 2].status == 'HIT' && this.ships[i + 3].status == 'HIT') {
-      this.sinkIt(player, 'battleship');
+    else if (player.ships[i].name == 'battleship' &&  player.ships[i].status == 'HIT' && player.ships[i + 1].status == 'HIT' && player.ships[i + 2].status == 'HIT' && player.ships[i + 3].status == 'HIT') {
+      player.sinkIt(player, 'battleship');
     }
-    else if (this.ships[i].name == 'carrier' &&  this.ships[i].status == 'HIT' && this.ships[i + 1].status == 'HIT' && this.ships[i + 2].status == 'HIT' && this.ships[i + 3].status == 'HIT' && this.ships[i + 4].status == 'HIT') {
-      this.sinkIt(player, 'carrier');
+    else if (player.ships[i].name == 'carrier' &&  player.ships[i].status == 'HIT' && player.ships[i + 1].status == 'HIT' && player.ships[i + 2].status == 'HIT' && player.ships[i + 3].status == 'HIT' && player.ships[i + 4].status == 'HIT') {
+      player.sinkIt(player, 'carrier');
     }
   }
 };
 
 Player.prototype.sinkIt = function(player, ship) {
-  for (x = 0; x < this.ships.length; x ++ ) {
-    if (this.ships[x].name == ship) {
-      this.ships[x].status = 'SUNK'
-      coords = this.convert(this.ships[x].square)
+  for (x = 0; x < player.ships.length; x ++ ) {
+    if (player.ships[x].name == ship) {
+      player.ships[x].status = 'SUNK'
+      coords = this.convert(player.ships[x].square)
       player.boardOpponentSees[coords[0]][coords[1]] = 'SUNK';
     }
   }
@@ -104,7 +104,10 @@ Player.prototype.sinkIt = function(player, ship) {
 
 Player.prototype.gameOver = function(player) {
   for(x = 0; x < player.ships.length; x ++) {
-    if (player.ships[x].status != 'SUNK') { break; }
+    if (player.ships[x].status != 'SUNK') {
+      this.won = false;
+      break;
+    }
     this.won = true;
   }
 };
@@ -117,7 +120,6 @@ Player.prototype.convert = function(square) {
     alphabet[i] = letter;
     letter = String.fromCharCode(letter.charCodeAt() + 1)
   }
-
   coords = [alphabet.indexOf(result[0])];
   result = parseInt(result[1]);
   coords.push(result - 1);
