@@ -40,8 +40,25 @@ Player.prototype.emptyBoard = function() {
 };
 
 Player.prototype.placeShip = function(name, square, size, direction) {
-  size ++;
-  for (i = 1; i < size; i ++ ) {
+  var error = false;
+  coords = this.convert(square);
+  console.log(coords)
+  if ( coords[0] < 0 || coords[1] > 9 ) {
+    throw Error('Cannot place out of bounds')
+    return
+  }
+
+  for (x = 0; x < this.ships.length; x ++ ) {
+    if (this.ships[x].square == square) {
+      error = true;
+    }
+  }
+  if(error == true) {
+    throw Error('Cannot place on top of another ship')
+    return ;
+  }
+
+  for (i = 0; i < size; i ++ ) {
     this.ships.push(new Ship(name, square));
     if (direction == 'V') { square = this.nextVerticalSquare(square); }
     else { square = this.nextHorizontalSquare(square); }
@@ -131,6 +148,10 @@ Player.prototype.splitSquare = function(square) {
   if (square.includes('10')) {
     result[0] = square.charAt(0);
     result[1] = '10';
+  }
+  else if ( square.length > 2 ) {
+    throw Error ('Cannot place out of bounds')
+    return
   }
   else { result = square.split('',2) }
   return result;

@@ -52,6 +52,22 @@ describe('Player can place', function() {
   });
 });
 
+describe('Player cannot place a ship', function () {
+  it('out of bounds', function () {
+    expect( function() { player1.placeShip('sub', 'K1', 1); } ).toThrow(new Error('Cannot place out of bounds'));
+    expect(player1.ships.length).toEqual(0);
+  });
+  it('out of bounds', function () {
+    expect( function() { player1.placeShip('sub', 'A11', 1); } ).toThrow(new Error('Cannot place out of bounds'));
+    expect(player1.ships.length).toEqual(0);
+  });
+  it('on top of another', function () {
+    player1.placeShip('destroyer', 'B1', 2);
+    expect( function() { player1.placeShip('sub', 'B1', 1); } ).toThrow(new Error('Cannot place on top of another ship'));
+    expect(player1.ships.length).toEqual(2);
+  });
+});
+
 describe('Player 1 can fire on player 2,', function () {
 
   beforeEach(function() {
