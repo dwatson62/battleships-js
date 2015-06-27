@@ -1,0 +1,1 @@
+var battleships = angular.module('Battleships', ['ngResource']);
