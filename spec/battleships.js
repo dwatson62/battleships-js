@@ -15,6 +15,7 @@ describe('Can create a board at start of the game', function () {
 
 describe('Player can place', function() {
   it('1 ship of size 1', function () {
+    player1 = new Player;
     player1.placeShip('sub', 'A1', 1);
     expect(player1.ships.length).toEqual(1)
   });
